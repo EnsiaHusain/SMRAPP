@@ -80,13 +80,13 @@ public class StockMarketServiceImpl implements  StockMarketService{
         return true;
     }
 
-    public String calculateStockPerformance(String stockName) throws Exception{
+    public List<StockMarketData> calculateStockPerformance(String stockName) throws Exception{
         List<StockMarketData> stockMarketDataList = stockMarketRepository.findByStock(stockName);
 
         for(StockMarketData data : stockMarketDataList){
             System.out.println(data.getHigh());
         }
-        return "Prediction for Stock "+stockName;
+        return stockMarketDataList;
     }
 
     public Boolean addNewStock(StockMarketDataDto stockMarketDataDto) throws Exception{

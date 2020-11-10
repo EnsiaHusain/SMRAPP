@@ -2,11 +2,15 @@ package com.stock.market.research.app.controller;
 
 import com.stock.market.research.app.domain.StockMarketData;
 import com.stock.market.research.app.dto.StockMarketDataDto;
+import com.stock.market.research.app.exception.GenericSystemException;
+import com.stock.market.research.app.exception.StockNotFoundException;
 import com.stock.market.research.app.service.StockMarketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,35 +24,38 @@ public class StockMarketController {
     private StockMarketService stockMarketService;
 
     @RequestMapping(value = "/uploadBulkData",method = RequestMethod.POST)
-    public Boolean uploadCsvFile(@RequestParam(name = "file")MultipartFile file){
+    public Boolean uploadCsvFile(@RequestParam(name = "file") MultipartFile file) throws Exception{
         try {
            return  stockMarketService.uploadFile(file);
         }catch(Exception e){
             logger.log(Level.ALL,"Error while uploading csv file");
+            throw new GenericSystemException("There was an internal error while uploading csv file");
         }
 
-        return false;
     }
 
     @RequestMapping(value = "/predictions", method =  RequestMethod.GET)
-    public String calculateStockPerformance(@RequestParam(name ="stockName") String stockName){
+    public List<StockMarketData> calculateStockPerformance(@RequestParam(name ="stockName") String stockName) throws Exception{
         try {
-            return stockMarketService.calculateStockPerformance(stockName);
+            List<StockMarketData> stockMarketData = stockMarketService.calculateStockPerformance(stockName);
+            if(stockMarketData == null || stockMarketData.isEmpty()){
+                throw new StockNotFoundException("No data found for stock "+stockName);
+            }
+            return stockMarketData;
         }catch(Exception e){
             logger.log(Level.ALL,"Error while predicting stock performance");
+            throw new GenericSystemException("There was an internal error while viewing stock performance");
         }
-
-        return "No Predictions Made";
     }
 
     @RequestMapping(value = "/addRecord",method = RequestMethod.POST)
-    public Boolean addNewRecord(@RequestBody StockMarketDataDto stockMarketData){
+    public Boolean addNewRecord(@RequestBody StockMarketDataDto stockMarketData) throws Exception{
         try {
             return stockMarketService.addNewStock(stockMarketData);
         }catch(Exception e){
             logger.log(Level.ALL,"Error while predicting stock performance");
+            throw new GenericSystemException("There was an internal error while adding a new stock data");
         }
-        return false;
     }
 
 }
