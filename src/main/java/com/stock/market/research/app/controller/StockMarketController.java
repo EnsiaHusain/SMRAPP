@@ -35,9 +35,9 @@ public class StockMarketController {
     }
 
     @RequestMapping(value = "/predictions", method =  RequestMethod.GET)
-    public List<StockMarketData> calculateStockPerformance(@RequestParam(name ="stockName") String stockName) throws Exception{
+    public List<StockMarketDataDto> calculateStockPerformance(@RequestParam(name ="stockName") String stockName) throws Exception{
         try {
-            List<StockMarketData> stockMarketData = stockMarketService.calculateStockPerformance(stockName);
+            List<StockMarketDataDto> stockMarketData = stockMarketService.calculateStockPerformance(stockName);
             if(stockMarketData == null || stockMarketData.isEmpty()){
                 throw new StockNotFoundException("No data found for stock "+stockName);
             }

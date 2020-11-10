@@ -101,7 +101,7 @@ public class SMRAppControllerIntegrationTest {
         ResponseEntity<Boolean> responseEntity1 = this.restTemplate.postForEntity("http://localhost:8080/stock/market/addRecord",stockMarketDataDto, Boolean.class);
         Assertions.assertTrue(responseEntity1.getBody().booleanValue());
 
-        ResponseEntity<List<StockMarketData>> responseEntity2 = this.restTemplate.exchange("http://localhost:8080/stock/market/predictions?stockName=AXP", HttpMethod.GET,null,new ParameterizedTypeReference<List<StockMarketData>>(){});
+        ResponseEntity<List<StockMarketDataDto>> responseEntity2 = this.restTemplate.exchange("http://localhost:8080/stock/market/predictions?stockName=AXP", HttpMethod.GET,null,new ParameterizedTypeReference<List<StockMarketDataDto>>(){});
         Assertions.assertNotNull(responseEntity2.getBody());
         Assertions.assertNotNull(responseEntity2.getBody().size()==1);
     }

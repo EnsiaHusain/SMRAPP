@@ -80,13 +80,35 @@ public class StockMarketServiceImpl implements  StockMarketService{
         return true;
     }
 
-    public List<StockMarketData> calculateStockPerformance(String stockName) throws Exception{
+    public List<StockMarketDataDto> calculateStockPerformance(String stockName) throws Exception{
         List<StockMarketData> stockMarketDataList = stockMarketRepository.findByStock(stockName);
 
+        List<StockMarketDataDto> stockMarketDataDtos = new ArrayList<>();
         for(StockMarketData data : stockMarketDataList){
-            System.out.println(data.getHigh());
+            StockMarketDataDto dto = new StockMarketDataDto();
+            dto.setQuarter(data.getQuarter());
+            dto.setDate(data.getDate().toString());
+            dto.setOpen(data.getOpen().toString()+"$");
+            dto.setHigh(data.getHigh().toString()+"$");
+            dto.setLow(data.getLow().toString()+"$");
+            dto.setClose(data.getClose().toString()+"$");
+            dto.setVolume(data.getVolume());
+            dto.setPercentChangePrice(data.getPercentChangePrice());
+            dto.setPercentChangeNextWeeksPrice(data.getPercentChangeNextWeeksPrice());
+            dto.setPercentChangePrice(data.getPercentChangePrice());
+            dto.setNextWeeksopen(data.getNextWeeksopen().toString());
+            dto.setNextWeeksClose(data.getNextWeeksClose().toString());
+            dto.setDaysToNextDividend(data.getDaysToNextDividend());
+            dto.setPercentReturnNextDividend(data.getPercentReturnNextDividend());
+            if(data.getPreviousWeeksVolume()!=null ){
+                dto.setPreviousWeeksVolume(data.getPreviousWeeksVolume());
+            }
+            if(data.getPercentChangeVolumeOverlastWeek()!=null){
+                dto.setPercentChangeVolumeOverlastWeek(data.getPercentChangeVolumeOverlastWeek());
+            }
+            stockMarketDataDtos.add(dto);
         }
-        return stockMarketDataList;
+        return stockMarketDataDtos;
     }
 
     public Boolean addNewStock(StockMarketDataDto stockMarketDataDto) throws Exception{
