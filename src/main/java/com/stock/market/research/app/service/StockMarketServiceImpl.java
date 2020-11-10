@@ -8,6 +8,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
@@ -24,6 +25,7 @@ public class StockMarketServiceImpl implements  StockMarketService{
     private StockMarketRepository stockMarketRepository;
 
     @Override
+    @Transactional
     public Boolean uploadFile(MultipartFile file) throws Exception{
 
         BufferedReader fileReader = new BufferedReader(new InputStreamReader(file.getInputStream(), "UTF-8"));
@@ -80,7 +82,8 @@ public class StockMarketServiceImpl implements  StockMarketService{
         return true;
     }
 
-    public List<StockMarketDataDto> calculateStockPerformance(String stockName) throws Exception{
+    @Override
+    public List<StockMarketDataDto> viewStockPerformance(String stockName) throws Exception{
         List<StockMarketData> stockMarketDataList = stockMarketRepository.findByStock(stockName);
 
         List<StockMarketDataDto> stockMarketDataDtos = new ArrayList<>();
@@ -111,6 +114,8 @@ public class StockMarketServiceImpl implements  StockMarketService{
         return stockMarketDataDtos;
     }
 
+    @Override
+    @Transactional
     public Boolean addNewStock(StockMarketDataDto stockMarketDataDto) throws Exception{
         StockMarketData stockMarketData = new StockMarketData();
         stockMarketData.setQuarter(stockMarketDataDto.getQuarter());

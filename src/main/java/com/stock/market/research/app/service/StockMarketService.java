@@ -9,7 +9,7 @@ public interface StockMarketService {
 
     Boolean uploadFile(MultipartFile file) throws Exception;
 
-    List<StockMarketDataDto> calculateStockPerformance(String stockName) throws Exception;
+    List<StockMarketDataDto> viewStockPerformance(String stockName) throws Exception;
 
     Boolean addNewStock(StockMarketDataDto stockMarketDataDto) throws Exception;
 }
