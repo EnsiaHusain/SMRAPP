@@ -1,6 +1,5 @@
 package com.stock.market.research.app.service;
 
-import com.stock.market.research.app.domain.StockMarketData;
 import com.stock.market.research.app.dto.StockMarketDataDto;
 import org.springframework.web.multipart.MultipartFile;
 

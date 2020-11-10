@@ -1,6 +1,5 @@
 package com.stock.market.research.app;
 
-import com.stock.market.research.app.domain.StockMarketData;
 import com.stock.market.research.app.dto.StockMarketDataDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

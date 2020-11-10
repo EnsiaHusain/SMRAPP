@@ -3,7 +3,6 @@ package com.stock.market.research.app.controller;
 import com.stock.market.research.app.exception.ErrorResponse;
 import com.stock.market.research.app.exception.GenericSystemException;
 import com.stock.market.research.app.exception.StockNotFoundException;
-import com.sun.tools.javah.Gen;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

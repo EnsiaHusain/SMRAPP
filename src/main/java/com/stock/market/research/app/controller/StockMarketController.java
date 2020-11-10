@@ -1,6 +1,5 @@
 package com.stock.market.research.app.controller;
 
-import com.stock.market.research.app.domain.StockMarketData;
 import com.stock.market.research.app.dto.StockMarketDataDto;
 import com.stock.market.research.app.exception.GenericSystemException;
 import com.stock.market.research.app.exception.StockNotFoundException;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
